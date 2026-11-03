@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, MapPin, Instagram, Phone, Coffee, Check, ArrowRight } from "lucide-react";
+import { Menu, X, MapPin, Instagram, Phone, Check, ArrowRight } from "lucide-react";
 import logo from "@/assets/odoya_logo.png.asset.json";
 import { waLink, WA_MESSAGES } from "@/lib/whatsapp";
 
@@ -182,8 +182,8 @@ function Rooms() {
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">Acomodações</p>
         <h2 className="mt-3 text-4xl text-primary md:text-5xl">Encontre seu espaço no Odoyá</h2>
         <div className="mt-12 grid gap-8 md:grid-cols-2">
-          <RoomCard tag="Compartilhado" title="Quartos compartilhados" desc="Uma opção prática para quem gosta de viajar, compartilhar experiências e conhecer pessoas durante a jornada." features={["Acomodação compartilhada", "Opções com ar-condicionado", "Opções sem ar-condicionado", "Banheiros compartilhados"]} cta="Consultar disponibilidade" href={waLink(WA_MESSAGES.shared)} />
-          <RoomCard tag="Privativo" title="Suíte privativa" desc="Mais privacidade e tranquilidade para aproveitar sua estadia em Arraial d'Ajuda." features={["Acomodação privativa", "Banheiro privativo"]} cta="Consultar a suíte pelo WhatsApp" href={waLink(WA_MESSAGES.suite)} />
+          <RoomCard tag="Compartilhado" title="Quartos compartilhados" desc="Uma opção prática para quem gosta de viajar, compartilhar experiências e conhecer pessoas durante a jornada." features={["Acomodação compartilhada", "Opções com ar-condicionado", "Opções sem ar-condicionado", "Banheiro compartilhado"]} cta="Consultar disponibilidade" href={waLink(WA_MESSAGES.shared)} />
+          <RoomCard tag="Privativo" title="Suíte privativa" desc="Mais privacidade e tranquilidade para aproveitar sua estadia em Arraial d'Ajuda." features={["Acomodação privativa", "Quarto para até 2 pessoas", "Banheiro privativo"]} cta="Consultar a suíte pelo WhatsApp" href={waLink(WA_MESSAGES.suite)} />
         </div>
       </div>
     </section>
@@ -212,10 +212,6 @@ function Spaces() {
             <p className="mt-1.5 text-sm text-muted-foreground">{s.desc}</p>
           </article>
         ))}
-      </div>
-      <div className="mt-10 flex items-start gap-4 rounded-2xl border border-accent/40 bg-accent/10 p-6">
-        <Coffee className="mt-0.5 h-6 w-6 shrink-0 text-accent" />
-        <p className="text-primary"><strong>Café da manhã:</strong> disponível mediante reserva antecipada.</p>
       </div>
     </section>
   );
