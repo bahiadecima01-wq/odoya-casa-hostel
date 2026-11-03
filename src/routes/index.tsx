@@ -2,13 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, MapPin, Instagram, Phone, Coffee, Check, ArrowRight } from "lucide-react";
 import logo from "@/assets/odoya_logo.png.asset.json";
-import hero from "@/assets/hero-beach.jpg";
-import hammock from "@/assets/hammock.jpg";
-import sharedRoom from "@/assets/shared-room.jpg";
-import suite from "@/assets/suite.jpg";
-import kitchen from "@/assets/kitchen.jpg";
-import workspace from "@/assets/workspace.jpg";
-import living from "@/assets/living.jpg";
 import { waLink, WA_MESSAGES } from "@/lib/whatsapp";
 
 const TITLE = "Odoyá Casa Hostel | Hospedagem em Arraial d'Ajuda - Bahia";
@@ -82,11 +75,10 @@ function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
 function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border/60 bg-card">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <a href="#inicio" className="flex items-center gap-3" aria-label="Odoyá Casa Hostel — início">
           <img src={logo.url} alt="Logo Odoyá Casa Hostel" className="h-12 w-12 object-contain" />
-          <span className="font-serif text-lg font-semibold text-primary">Odoyá</span>
         </a>
         <nav className="hidden items-center gap-7 md:flex" aria-label="Principal">
           {NAV.map((n) => (
@@ -107,7 +99,7 @@ function Header() {
         </button>
       </div>
       {open && (
-        <nav className="border-t border-border bg-background px-5 pb-5 md:hidden" aria-label="Menu móvel">
+        <nav className="border-t border-border bg-card px-5 pb-5 md:hidden" aria-label="Menu móvel">
           {NAV.map((n) => (
             <a key={n.href} href={n.href} onClick={() => setOpen(false)} className="block py-3 font-semibold text-primary">
               {n.label}
@@ -121,10 +113,8 @@ function Header() {
 
 function Hero() {
   return (
-    <section id="inicio" className="relative flex min-h-[88vh] items-end overflow-hidden">
-      <img src={hero} alt="Praia tropical na Bahia ao pôr do sol (imagem ilustrativa)" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
-      <div className="absolute inset-0 bg-hero-overlay" />
-      <div className="relative mx-auto w-full max-w-6xl px-5 pb-20 pt-32 text-primary-foreground">
+    <section id="inicio" className="relative flex items-center overflow-hidden bg-primary">
+      <div className="relative mx-auto w-full max-w-6xl px-5 py-20 text-primary-foreground md:py-24">
         <p className="fade-up mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-accent">Casa hostel · Arraial d'Ajuda, Bahia</p>
         <h1 className="fade-up max-w-3xl text-4xl leading-tight md:text-6xl">
           Mais do que um lugar para dormir, <em className="text-accent">um lugar para se sentir em casa.</em>
@@ -145,12 +135,8 @@ function Hero() {
 
 function About() {
   return (
-    <section id="sobre" className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-24 md:grid-cols-2">
-      <div className="relative">
-        <div className="absolute -left-4 -top-4 h-full w-full rounded-[2.5rem] bg-accent/25" aria-hidden />
-        <img src={hammock} alt="Varanda com rede em casa de praia (imagem ilustrativa)" loading="lazy" width={1024} height={1280} className="relative aspect-[4/5] w-full rounded-[2.5rem] object-cover shadow-soft" />
-      </div>
-      <div>
+    <section id="sobre" className="mx-auto max-w-6xl px-5 py-24">
+      <div className="max-w-3xl">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">Sobre o Odoyá</p>
         <h2 className="mt-3 text-4xl text-primary md:text-5xl">Um jeito diferente de viver Arraial</h2>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted-foreground">
@@ -166,14 +152,11 @@ function About() {
   );
 }
 
-function RoomCard(props: { img: string; tag: string; title: string; desc: string; features: string[]; cta: string; href: string }) {
+function RoomCard(props: { tag: string; title: string; desc: string; features: string[]; cta: string; href: string }) {
   return (
     <article className="flex flex-col overflow-hidden rounded-[2rem] bg-card shadow-soft">
-      <div className="relative">
-        <img src={props.img} alt={`${props.title} (imagem ilustrativa)`} loading="lazy" width={1200} height={912} className="aspect-[4/3] w-full object-cover" />
-        <span className="absolute left-4 top-4 rounded-full bg-background/95 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-secondary">{props.tag}</span>
-      </div>
       <div className="flex flex-1 flex-col p-8">
+        <span className="mb-4 text-xs font-bold uppercase tracking-wider text-secondary">{props.tag}</span>
         <h3 className="text-3xl text-primary">{props.title}</h3>
         <p className="mt-3 text-muted-foreground">{props.desc}</p>
         <ul className="mt-6 space-y-2.5">
@@ -199,8 +182,8 @@ function Rooms() {
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">Acomodações</p>
         <h2 className="mt-3 text-4xl text-primary md:text-5xl">Encontre seu espaço no Odoyá</h2>
         <div className="mt-12 grid gap-8 md:grid-cols-2">
-          <RoomCard img={sharedRoom} tag="Compartilhado" title="Quartos compartilhados" desc="Uma opção prática para quem gosta de viajar, compartilhar experiências e conhecer pessoas durante a jornada." features={["Acomodação compartilhada", "Opções com ar-condicionado", "Opções sem ar-condicionado", "Banheiros compartilhados"]} cta="Consultar disponibilidade" href={waLink(WA_MESSAGES.shared)} />
-          <RoomCard img={suite} tag="Privativo" title="Suíte privativa" desc="Mais privacidade e tranquilidade para aproveitar sua estadia em Arraial d'Ajuda." features={["Acomodação privativa", "Banheiro privativo"]} cta="Consultar a suíte pelo WhatsApp" href={waLink(WA_MESSAGES.suite)} />
+          <RoomCard tag="Compartilhado" title="Quartos compartilhados" desc="Uma opção prática para quem gosta de viajar, compartilhar experiências e conhecer pessoas durante a jornada." features={["Acomodação compartilhada", "Opções com ar-condicionado", "Opções sem ar-condicionado", "Banheiros compartilhados"]} cta="Consultar disponibilidade" href={waLink(WA_MESSAGES.shared)} />
+          <RoomCard tag="Privativo" title="Suíte privativa" desc="Mais privacidade e tranquilidade para aproveitar sua estadia em Arraial d'Ajuda." features={["Acomodação privativa", "Banheiro privativo"]} cta="Consultar a suíte pelo WhatsApp" href={waLink(WA_MESSAGES.suite)} />
         </div>
       </div>
     </section>
@@ -208,10 +191,10 @@ function Rooms() {
 }
 
 const SPACES = [
-  { img: kitchen, title: "Cozinha equipada", desc: "Tenha liberdade e autonomia para preparar suas próprias refeições." },
-  { img: hammock, title: "Área externa com rede", desc: "Um convite para desacelerar, descansar e aproveitar o clima de Arraial." },
-  { img: living, title: "Sala de convivência", desc: "Um espaço para relaxar, conversar e compartilhar bons momentos." },
-  { img: workspace, title: "Espaço de trabalho", desc: "Um ambiente para quem precisa conciliar viagens e trabalho remoto." },
+  { title: "Cozinha equipada", desc: "Tenha liberdade e autonomia para preparar suas próprias refeições." },
+  { title: "Área externa com rede", desc: "Um convite para desacelerar, descansar e aproveitar o clima de Arraial." },
+  { title: "Sala de convivência", desc: "Um espaço para relaxar, conversar e compartilhar bons momentos." },
+  { title: "Espaço de trabalho", desc: "Um ambiente para quem precisa conciliar viagens e trabalho remoto." },
 ];
 
 function Spaces() {
@@ -224,10 +207,7 @@ function Spaces() {
       </div>
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {SPACES.map((s) => (
-          <article key={s.title} className="group">
-            <div className="overflow-hidden rounded-[1.75rem]">
-              <img src={s.img} alt={`${s.title} (imagem ilustrativa)`} loading="lazy" width={1024} height={768} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" />
-            </div>
+          <article key={s.title} className="border-t border-accent/40 pt-4">
             <h3 className="mt-4 text-xl text-primary">{s.title}</h3>
             <p className="mt-1.5 text-sm text-muted-foreground">{s.desc}</p>
           </article>
@@ -282,9 +262,7 @@ function Experience() {
 
 function FinalCta() {
   return (
-    <section className="relative overflow-hidden">
-      <img src={hero} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-      <div className="absolute inset-0 bg-hero-overlay" />
+    <section className="relative overflow-hidden bg-primary">
       <div className="relative mx-auto max-w-3xl px-5 py-28 text-center text-primary-foreground">
         <h2 className="text-4xl md:text-6xl">Arraial d'Ajuda espera por você.</h2>
         <p className="mt-5 text-lg text-primary-foreground/90">Venha viver dias leves, conhecer novos lugares e encontrar o aconchego de uma casa no caminho.</p>
@@ -299,8 +277,7 @@ function FinalCta() {
 function Footer() {
   return (
     <footer className="bg-background py-14">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-3">
-        <img src={logo.url} alt="Logo Odoyá Casa Hostel" loading="lazy" className="h-32 w-32 object-contain" />
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-2">
         <div className="space-y-3 text-sm text-primary">
           <p className="flex gap-2"><MapPin className="h-4 w-4 shrink-0 text-secondary" /> {ADDRESS}.</p>
           <a href={waLink(WA_MESSAGES.general)} target="_blank" rel="noopener noreferrer" className="flex gap-2 hover:text-secondary"><Phone className="h-4 w-4 text-secondary" /> (73) 99105-4885</a>
