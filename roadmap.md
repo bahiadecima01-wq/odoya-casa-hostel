@@ -4,6 +4,6 @@
 - [x] Verify preserved navigation, contacts and page layout.
 
 # Accommodation and benefits update
-- [ ] Replace only the shared accommodation feature list.
-- [ ] Add the ten compact benefits after accommodations, preserving other sections.
-- [ ] Verify the benefit facts and desktop/mobile presentation.
+- [x] Replace only the shared accommodation feature list.
+- [x] Add the ten compact benefits after accommodations, preserving other sections.
+- [x] Verify the benefit facts and desktop/mobile presentation.
