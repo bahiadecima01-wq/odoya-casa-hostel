@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, MapPin, Instagram, Phone, Coffee, Check, ArrowRight } from "lucide-react";
+import { Menu, X, MapPin, Instagram, Phone, Check, ArrowRight } from "lucide-react";
 import logo from "@/assets/odoya_logo.png.asset.json";
 import { waLink, WA_MESSAGES } from "@/lib/whatsapp";
 
@@ -212,10 +212,6 @@ function Spaces() {
             <p className="mt-1.5 text-sm text-muted-foreground">{s.desc}</p>
           </article>
         ))}
-      </div>
-      <div className="mt-10 flex items-start gap-4 rounded-2xl border border-accent/40 bg-accent/10 p-6">
-        <Coffee className="mt-0.5 h-6 w-6 shrink-0 text-accent" />
-        <p className="text-primary"><strong>Café da manhã:</strong> disponível mediante reserva antecipada.</p>
       </div>
     </section>
   );
