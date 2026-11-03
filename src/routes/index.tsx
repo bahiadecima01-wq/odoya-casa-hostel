@@ -182,8 +182,8 @@ function Rooms() {
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">Acomodações</p>
         <h2 className="mt-3 text-4xl text-primary md:text-5xl">Encontre seu espaço no Odoyá</h2>
         <div className="mt-12 grid gap-8 md:grid-cols-2">
-          <RoomCard tag="Compartilhado" title="Quartos compartilhados" desc="Uma opção prática para quem gosta de viajar, compartilhar experiências e conhecer pessoas durante a jornada." features={["Acomodação compartilhada", "Opções com ar-condicionado", "Opções sem ar-condicionado", "Banheiros compartilhados"]} cta="Consultar disponibilidade" href={waLink(WA_MESSAGES.shared)} />
-          <RoomCard tag="Privativo" title="Suíte privativa" desc="Mais privacidade e tranquilidade para aproveitar sua estadia em Arraial d'Ajuda." features={["Acomodação privativa", "Banheiro privativo"]} cta="Consultar a suíte pelo WhatsApp" href={waLink(WA_MESSAGES.suite)} />
+          <RoomCard tag="Compartilhado" title="Quartos compartilhados" desc="Uma opção prática para quem gosta de viajar, compartilhar experiências e conhecer pessoas durante a jornada." features={["Acomodação compartilhada", "Opções com ar-condicionado", "Opções sem ar-condicionado", "Banheiro compartilhado"]} cta="Consultar disponibilidade" href={waLink(WA_MESSAGES.shared)} />
+          <RoomCard tag="Privativo" title="Suíte privativa" desc="Mais privacidade e tranquilidade para aproveitar sua estadia em Arraial d'Ajuda." features={["Acomodação privativa", "Quarto para até 2 pessoas", "Banheiro privativo"]} cta="Consultar a suíte pelo WhatsApp" href={waLink(WA_MESSAGES.suite)} />
         </div>
       </div>
     </section>
