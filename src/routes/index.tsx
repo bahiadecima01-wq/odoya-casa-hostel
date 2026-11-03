@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, MapPin, Instagram, Phone, Check, ArrowRight } from "lucide-react";
+import { Menu, X, MapPin, Instagram, Phone, Check, ArrowRight, Moon, Users, House, Sparkles, BedSingle, CookingPot, DoorOpen, HeartHandshake } from "lucide-react";
 import logo from "@/assets/odoya_logo.png.asset.json";
 import { waLink, WA_MESSAGES } from "@/lib/whatsapp";
+import { BENEFITS } from "@/lib/hostel-benefits";
 
 const TITLE = "Odoyá Casa Hostel | Hospedagem em Arraial d'Ajuda - Bahia";
 const DESC =
@@ -182,8 +183,32 @@ function Rooms() {
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">Acomodações</p>
         <h2 className="mt-3 text-4xl text-primary md:text-5xl">Encontre seu espaço no Odoyá</h2>
         <div className="mt-12 grid gap-8 md:grid-cols-2">
-          <RoomCard tag="Compartilhado" title="Quartos compartilhados" desc="Uma opção prática para quem gosta de viajar, compartilhar experiências e conhecer pessoas durante a jornada." features={["Acomodação compartilhada", "Opções com ar-condicionado", "Opções sem ar-condicionado", "Banheiro compartilhado"]} cta="Consultar disponibilidade" href={waLink(WA_MESSAGES.shared)} />
+          <RoomCard tag="Compartilhado" title="Quartos compartilhados" desc="Uma opção prática para quem gosta de viajar, compartilhar experiências e conhecer pessoas durante a jornada." features={["Camas beliche", "Opção com ou sem ar condicionado", "Banheiro externo"]} cta="Consultar disponibilidade" href={waLink(WA_MESSAGES.shared)} />
           <RoomCard tag="Privativo" title="Suíte privativa" desc="Mais privacidade e tranquilidade para aproveitar sua estadia em Arraial d'Ajuda." features={["Acomodação privativa", "Quarto para até 2 pessoas", "Banheiro privativo"]} cta="Consultar a suíte pelo WhatsApp" href={waLink(WA_MESSAGES.suite)} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const BENEFIT_ICONS = { MapPin, Moon, Users, House, Sparkles, BedSingle, CookingPot, DoorOpen, Check, HeartHandshake };
+
+function Benefits() {
+  return (
+    <section aria-labelledby="benefits-heading" className="border-b border-border/60 py-16 md:py-20">
+      <div className="mx-auto max-w-6xl px-5">
+        <h2 id="benefits-heading" className="text-4xl text-primary md:text-5xl">Por que escolher o Odoyá?</h2>
+        <div className="mt-10 grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {BENEFITS.map((benefit) => {
+            const Icon = BENEFIT_ICONS[benefit.icon];
+            return (
+              <article key={benefit.title} className="rounded-lg border border-border/70 bg-card p-5 md:p-6">
+                <Icon className="mb-4 h-6 w-6 text-secondary" strokeWidth={1.75} aria-hidden="true" />
+                <h3 className="font-sans text-base font-bold leading-snug text-primary">{benefit.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{benefit.description}</p>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -306,6 +331,7 @@ function Index() {
         <Hero />
         <About />
         <Rooms />
+        <Benefits />
         <Spaces />
         <Location />
         <Experience />
