@@ -24,7 +24,7 @@ function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
 function DateField(props: {
   id: string;
   label: string;
-  value?: Date;
+  value?: Date | undefined;
   onChange: (date: Date | undefined) => void;
   disabledBefore: Date;
   placeholder: string;
