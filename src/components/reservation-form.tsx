@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { ptBR } from "date-fns/locale";
-import { BedDouble, BedSingle, CalendarIcon, Check } from "lucide-react";
+import { BedDouble, BedSingle, CalendarIcon, Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { waLink } from "@/lib/whatsapp";
 import {
   buildReservationMessage,
+  clampGuests,
+  describeGuests,
   formatDateBR,
   isReservationComplete,
+  maxGuests,
   startOfToday,
   type Accommodation,
 } from "@/lib/reservation";
@@ -67,8 +70,46 @@ function DateField(props: {
   );
 }
 
+function GuestStepper(props: { value: number; max: number; onChange: (guests: number) => void }) {
+  const { value, max, onChange } = props;
+  const stepButton =
+    "flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-secondary transition hover:border-secondary/60 hover:bg-secondary/10 focus:outline-none focus:ring-2 focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:bg-background";
+
+  return (
+    <div className="rounded-2xl border border-border/70 bg-background p-4">
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="text-sm font-bold text-primary">Quantidade de hóspedes</span>
+        <span className="text-xs font-semibold uppercase tracking-wider text-secondary">Máximo de {max}</span>
+      </div>
+      <div className="mt-3 flex items-center justify-between gap-4">
+        <button
+          type="button"
+          onClick={() => onChange(Math.max(1, value - 1))}
+          disabled={value <= 1}
+          aria-label="Diminuir quantidade de hóspedes"
+          className={stepButton}
+        >
+          <Minus className="h-4 w-4" aria-hidden="true" />
+        </button>
+        <span className="text-lg font-bold text-primary" aria-live="polite">
+          {describeGuests(value)}
+        </span>
+        <button
+          type="button"
+          onClick={() => onChange(Math.min(max, value + 1))}
+          disabled={value >= max}
+          aria-label="Aumentar quantidade de hóspedes"
+          className={stepButton}
+        >
+          <Plus className="h-4 w-4" aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const ACCOMMODATIONS: { value: Accommodation; title: string; desc: string; icon: typeof BedSingle }[] = [
-  { value: "shared", title: "Quarto compartilhado", desc: "Para 1 pessoa, em ambiente compartilhado.", icon: BedSingle },
+  { value: "shared", title: "Quarto compartilhado", desc: "Cama beliche, banheiro externo", icon: BedSingle },
   { value: "suite", title: "Suíte privativa", desc: "Para até 2 pessoas, com banheiro privativo.", icon: BedDouble },
 ];
 
@@ -76,12 +117,13 @@ export function ReservationSection() {
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [accommodation, setAccommodation] = useState<Accommodation>();
-  const [guests, setGuests] = useState<1 | 2>();
+  const [guests, setGuests] = useState<number>();
 
   const today = startOfToday();
   const minCheckOut = checkIn ? new Date(checkIn.getFullYear(), checkIn.getMonth(), checkIn.getDate() + 1) : new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
 
   const complete = isReservationComplete({ checkIn, checkOut, accommodation, guests });
+  const selectedOption = ACCOMMODATIONS.find((option) => option.value === accommodation);
 
   function handleCheckIn(date: Date | undefined) {
     setCheckIn(date);
@@ -89,12 +131,16 @@ export function ReservationSection() {
   }
 
   function handleAccommodation(value: Accommodation) {
+    if (accommodation === value) {
+      setAccommodation(undefined);
+      return;
+    }
     setAccommodation(value);
-    if (value === "shared") setGuests(undefined);
+    setGuests(clampGuests(value, guests));
   }
 
   function handleSubmit() {
-    if (!complete || !checkIn || !checkOut || !accommodation) return;
+    if (!complete || !checkIn || !checkOut || !accommodation || guests === undefined) return;
     const message = buildReservationMessage({ checkIn, checkOut, accommodation, guests });
     window.open(waLink(message), "_blank", "noopener,noreferrer");
   }
@@ -105,9 +151,7 @@ export function ReservationSection() {
       ? "Agora escolha a data de saída, posterior à entrada."
       : !accommodation
         ? "Escolha sua acomodação para continuar."
-        : accommodation === "suite" && !guests
-          ? "Informe a quantidade de hóspedes da suíte."
-          : null;
+        : null;
 
   return (
     <section id="reserva" aria-labelledby="reserva-heading" className="py-24">
@@ -155,66 +199,62 @@ export function ReservationSection() {
               {ACCOMMODATIONS.map((option) => {
                 const selected = accommodation === option.value;
                 const Icon = option.icon;
+                const max = maxGuests(option.value);
                 return (
-                  <button
+                  <div
                     key={option.value}
-                    type="button"
-                    aria-pressed={selected}
-                    onClick={() => handleAccommodation(option.value)}
                     className={cn(
-                      "relative flex items-start gap-4 rounded-2xl border p-5 text-left transition hover:border-secondary/60 focus:outline-none focus:ring-2 focus:ring-ring/50",
+                      "rounded-2xl border transition",
                       selected ? "border-secondary bg-secondary/5" : "border-border bg-background",
                     )}
                   >
-                    <span
+                    <button
+                      type="button"
+                      aria-expanded={selected}
+                      onClick={() => handleAccommodation(option.value)}
                       className={cn(
-                        "flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition",
-                        selected ? "bg-secondary text-secondary-foreground" : "bg-accent/20 text-secondary",
+                        "flex w-full items-start gap-4 rounded-2xl p-5 text-left transition hover:border-secondary/60 focus:outline-none focus:ring-2 focus:ring-ring/50",
+                        selected && "hover:border-secondary",
                       )}
                     >
-                      <Icon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <span>
-                      <span className="block font-bold text-primary">{option.title}</span>
-                      <span className="mt-1 block text-sm text-muted-foreground">{option.desc}</span>
-                    </span>
-                    {selected && (
-                      <span className="absolute right-4 top-4 flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
-                        <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span
+                        className={cn(
+                          "flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition",
+                          selected ? "bg-secondary text-secondary-foreground" : "bg-accent/20 text-secondary",
+                        )}
+                      >
+                        <Icon className="h-5 w-5" aria-hidden="true" />
                       </span>
+                      <span className="flex-1">
+                        <span className="block font-bold text-primary">{option.title}</span>
+                        <span className="mt-1 block text-sm text-muted-foreground">{option.desc}</span>
+                      </span>
+                      <span
+                        className={cn(
+                          "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition",
+                          selected
+                            ? "border-secondary bg-secondary text-secondary-foreground"
+                            : "border-border text-secondary",
+                        )}
+                        aria-hidden="true"
+                      >
+                        {selected ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                      </span>
+                    </button>
+                    {selected && (
+                      <div className="px-5 pb-5">
+                        <GuestStepper
+                          value={guests === undefined ? 1 : guests}
+                          max={max}
+                          onChange={(next) => setGuests(clampGuests(option.value, next))}
+                        />
+                      </div>
                     )}
-                  </button>
+                  </div>
                 );
               })}
             </div>
           </fieldset>
-
-          {accommodation === "suite" && (
-            <fieldset className="mt-8">
-              <legend className="text-sm font-bold text-primary">Quantidade de hóspedes</legend>
-              <div className="mt-3 grid grid-cols-2 gap-4 sm:max-w-xs">
-                {([1, 2] as const).map((n) => {
-                  const selected = guests === n;
-                  return (
-                    <button
-                      key={n}
-                      type="button"
-                      aria-pressed={selected}
-                      onClick={() => setGuests(n)}
-                      className={cn(
-                        "rounded-full border px-5 py-3 font-semibold transition hover:border-secondary/60 focus:outline-none focus:ring-2 focus:ring-ring/50",
-                        selected
-                          ? "border-secondary bg-secondary text-secondary-foreground"
-                          : "border-border bg-background text-primary",
-                      )}
-                    >
-                      {n === 1 ? "1 pessoa" : "2 pessoas"}
-                    </button>
-                  );
-                })}
-              </div>
-            </fieldset>
-          )}
 
           <div className="mt-10 flex flex-col items-center gap-3">
             <button
@@ -224,6 +264,11 @@ export function ReservationSection() {
             >
               <WhatsAppIcon /> Consultar disponibilidade pelo WhatsApp
             </button>
+            {complete && selectedOption && guests !== undefined && (
+              <p className="text-sm font-semibold text-primary">
+                {selectedOption.title} · {describeGuests(guests)}
+              </p>
+            )}
             {hint && <p className="text-sm text-muted-foreground">{hint}</p>}
           </div>
         </form>

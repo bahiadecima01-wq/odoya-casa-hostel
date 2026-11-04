@@ -311,7 +311,7 @@ function Footer() {
         </nav>
       </div>
       <div className="mx-auto mt-10 max-w-6xl border-t border-border px-5 pt-6 text-xs text-muted-foreground">
-        © Odoyá Casa Hostel · Imagens ilustrativas.
+        © Odoyá Casa Hostel.
       </div>
     </footer>
   );
