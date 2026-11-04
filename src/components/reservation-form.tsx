@@ -195,7 +195,7 @@ export function ReservationSection() {
 
           <fieldset className="mt-8">
             <legend className="text-sm font-bold text-primary">Escolha sua acomodação</legend>
-            <div className="mt-3 grid gap-4 sm:grid-cols-2">
+            <div className="mt-3 grid items-start gap-4 sm:grid-cols-2">
               {ACCOMMODATIONS.map((option) => {
                 const selected = accommodation === option.value;
                 const Icon = option.icon;
