@@ -5,6 +5,7 @@ const LOGO = "/odoya_logo.png";
 const LOGO_TRANSPARENT = "/odoya_logo_transparent.png";
 import { waLink, WA_MESSAGES } from "@/lib/whatsapp";
 import { BENEFITS } from "@/lib/hostel-benefits";
+import { ReservationSection } from "@/components/reservation-form";
 
 const TITLE = "Odoyá Casa Hostel | Hospedagem em Arraial d'Ajuda - Bahia";
 const DESC =
@@ -332,6 +333,7 @@ function Index() {
         <Hero />
         <About />
         <Rooms />
+        <ReservationSection />
         <Benefits />
         <Spaces />
         <Location />
