@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, MapPin, Instagram, Phone, Check, ArrowRight, Moon, Users, House, Sparkles, BedSingle, CookingPot, DoorOpen, HeartHandshake } from "lucide-react";
-import logo from "@/assets/odoya_logo.png.asset.json";
-import logoTransparent from "@/assets/odoya_logo_transparent.png.asset.json";
+const LOGO = "/odoya_logo.png";
+const LOGO_TRANSPARENT = "/odoya_logo_transparent.png";
 import { waLink, WA_MESSAGES } from "@/lib/whatsapp";
 import { BENEFITS } from "@/lib/hostel-benefits";
 
@@ -80,7 +80,7 @@ function Header() {
     <header className="sticky top-0 z-40 border-b border-border/60 bg-card">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <a href="#inicio" className="flex items-center gap-3" aria-label="Odoyá Casa Hostel — início">
-          <img src={logo.url} alt="Logo Odoyá Casa Hostel" className="h-12 w-12 object-contain" />
+          <img src={LOGO} alt="Logo Odoyá Casa Hostel" className="h-12 w-12 object-contain" />
         </a>
         <nav className="hidden items-center gap-7 md:flex" aria-label="Principal">
           {NAV.map((n) => (
@@ -274,7 +274,7 @@ function Experience() {
       <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-accent/20" aria-hidden />
       <div className="absolute -bottom-32 -left-20 h-96 w-96 rounded-full bg-secondary/15" aria-hidden />
       <div className="relative mx-auto max-w-3xl px-5 text-center">
-        <img src={logoTransparent.url} alt="" className="mx-auto h-20 w-20 object-contain" loading="lazy" />
+        <img src={LOGO_TRANSPARENT} alt="" className="mx-auto h-20 w-20 object-contain" loading="lazy" />
         <h2 className="mt-6 text-4xl italic text-primary md:text-5xl">Descansar, compartilhar e viver Arraial com outro olhar.</h2>
         <p className="mt-6 text-lg text-muted-foreground">Mais do que hospedagem, uma experiência de simplicidade, autonomia e boas conexões.</p>
       </div>
