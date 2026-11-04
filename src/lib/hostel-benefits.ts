@@ -3,6 +3,9 @@ export const HOSTEL_FACTS = {
   distanceToMucugeMeters: 400,
 };
 
+export const HOUSE_RULES_NOTICE =
+  "Não hospedamos menores de 18 anos ou pets. Não temos estacionamento.";
+
 export const BENEFITS = [
   { icon: "MapPin", title: "Perto de tudo, longe do agito", description: `A apenas ${HOSTEL_FACTS.distanceToMucugeMeters} metros da Rua Mucugê, em uma rua residencial e tranquila.` },
   { icon: "Moon", title: "Mais tranquilidade para descansar", description: "Um ambiente tranquilo para noites de sono e momentos de descanso." },

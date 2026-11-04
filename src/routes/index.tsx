@@ -4,7 +4,7 @@ import { Menu, X, MapPin, Instagram, Phone, Check, ArrowRight, Moon, Users, Hous
 const LOGO = "/odoya_logo.png";
 const LOGO_TRANSPARENT = "/odoya_logo_transparent.png";
 import { waLink, WA_MESSAGES } from "@/lib/whatsapp";
-import { BENEFITS } from "@/lib/hostel-benefits";
+import { BENEFITS, HOUSE_RULES_NOTICE } from "@/lib/hostel-benefits";
 import { ReservationSection } from "@/components/reservation-form";
 
 const TITLE = "Odoyá Casa Hostel | Hospedagem em Arraial d'Ajuda - Bahia";
@@ -188,6 +188,9 @@ function Rooms() {
           <RoomCard tag="Compartilhado" title="Quartos compartilhados" desc="Uma opção prática para quem gosta de viajar, compartilhar experiências e conhecer pessoas durante a jornada." features={["Camas beliche", "Opção com ou sem ar condicionado", "Banheiro externo"]} cta="Consultar disponibilidade" href={waLink(WA_MESSAGES.shared)} />
           <RoomCard tag="Privativo" title="Suíte privativa" desc="Mais privacidade e tranquilidade para aproveitar sua estadia em Arraial d'Ajuda." features={["Acomodação privativa", "Quarto para até 2 pessoas", "Banheiro privativo"]} cta="Consultar a suíte pelo WhatsApp" href={waLink(WA_MESSAGES.suite)} />
         </div>
+        <p className="mx-auto mt-10 max-w-xl text-center text-sm leading-relaxed text-muted-foreground md:mt-12">
+          {HOUSE_RULES_NOTICE}
+        </p>
       </div>
     </section>
   );
