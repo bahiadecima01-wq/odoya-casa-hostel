@@ -1,10 +1,10 @@
 export type Accommodation = "shared" | "suite";
 
 export interface ReservationSelection {
-  checkIn?: Date;
-  checkOut?: Date;
-  accommodation?: Accommodation;
-  guests?: 1 | 2;
+  checkIn?: Date | undefined;
+  checkOut?: Date | undefined;
+  accommodation?: Accommodation | undefined;
+  guests?: 1 | 2 | undefined;
 }
 
 export function formatDateBR(date: Date): string {
@@ -38,7 +38,7 @@ export function buildReservationMessage(sel: {
   checkIn: Date;
   checkOut: Date;
   accommodation: Accommodation;
-  guests?: 1 | 2;
+  guests?: 1 | 2 | undefined;
 }): string {
   const period = `de ${formatDateBR(sel.checkIn)} a ${formatDateBR(sel.checkOut)}`;
   if (sel.accommodation === "shared") {
